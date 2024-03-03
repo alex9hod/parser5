@@ -1,0 +1,19 @@
+console.clear = () => console.log('Console was cleared')
+const i = setInterval(() => {
+  if (window.turnstile) {
+    clearInterval(i)
+    window.turnstile.render = (a, b) => {
+      const params = {
+        sitekey: b.sitekey,
+        pageurl: window.location.href,
+        data: b.cData,
+        pagedata: b.chlPageData,
+        action: b.action,
+        userAgent: navigator.userAgent,
+        json: 1
+      }
+      console.log('intercepted-params:' + JSON.stringify(params))
+      window.cfCallback = b.callback
+    }
+  }
+}, 50)
